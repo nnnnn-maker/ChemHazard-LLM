@@ -1,0 +1,27 @@
+{
+  "environment_name": "chem2",
+  "python_executable": "python",
+  "environment_prefix_name": "chem2",
+  "python": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]",
+  "platform": "Linux-5.15.0-105-generic-x86_64-with-glibc2.35",
+  "packages": {
+    "torch": "2.10.0",
+    "transformers": "5.3.0",
+    "peft": "0.18.1",
+    "accelerate": "1.13.0",
+    "bitsandbytes": "0.49.2",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.7.2",
+    "rdkit": "2025.9.6",
+    "openpyxl": null,
+    "matplotlib": "3.10.8",
+    "chemprop": null,
+    "datasets": "4.7.0",
+    "trl": null,
+    "tokenizers": "0.22.2",
+    "sentencepiece": "0.2.1",
+    "protobuf": null
+  },
+  "nvidia_smi": "Mon Oct  5 06:54:51 2026       \n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 610.57.04              KMD Version: 610.57.04     CUDA UMD Version: 13.3     |\n+-----------------------------------------+------------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA GeForce RTX 3090        Off |   00000000:09:00.0 Off |                  N/A |\n| 34%   26C    P8             29W /  350W |       1MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n\n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|  No running processes found                                                             |\n+-----------------------------------------------------------------------------------------+\n"
+}

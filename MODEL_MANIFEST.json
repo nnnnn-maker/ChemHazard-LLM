@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_rule": "Use validated checkpoint revisions and hashes. The recovered experiment tokenizer config lacked chat_template; Mistral training and inference must use the historical plain-role prompt. Do not claim bit-for-bit snapshot identity with the official Instruct directory.",
+  "models": [
+    {
+      "cli_name": "qwen",
+      "display_name": "Qwen2.5-7B-Instruct",
+      "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct",
+      "local_directory": "Model/Qwen2.5-7B-Instruct",
+      "model_type": "qwen2",
+      "architecture": "Qwen2ForCausalLM",
+      "license": "apache-2.0",
+      "gated": false,
+      "trust_remote_code": false,
+      "runtime_environment": "chem2",
+      "experiment_access_date": "2026-01-30",
+      "experiment_access_date_evidence": {
+        "source": "huggingface_local_download_metadata",
+        "timestamp_utc": "2026-01-30T06:57:30Z",
+        "metadata_file": "model-00001-of-00004.safetensors.metadata",
+        "matching_revision_records": 14,
+        "interpretation": "Recorded download or cache-validation time, not proven first download"
+      },
+      "used_revision": "a09a35458c702b33eeacc393d103063234e8bc28"
+    },
+    {
+      "cli_name": "mistral",
+      "display_name": "Mistral-7B-Instruct-v0.1",
+      "repository_id": "mistralai/Mistral-7B-Instruct-v0.1",
+      "url": "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1/tree/ec5deb64f2c6e6fa90c1abf74a91d5c93a9669ca",
+      "local_directory": "Model/Mistral-7B-Instruct-v0.1",
+      "historical_experiment_directory": "../Model/Mistral-7B-v0.1",
+      "revision_evidence": "The validated server weight SHA-256 hashes match the official Instruct revision. The recovered server tokenizer_config.json matches its captured hash and differs from the official file only by lacking chat_template.",
+      "model_snapshot_verified": false,
+      "prompt_format": "historical_plain_role_fallback",
+      "experiment_tokenizer_config_recovered": true,
+      "experiment_prompt_equivalent_verified": true,
+      "server_tokenizer_config_sha256": "ddb008229511e51607002ffe28925001c4a9ca4177dc4de3a655d085cc610b99",
+      "local_official_tokenizer_config_sha256": "475361439e5c012de9dffdedc416a66a50f1a29f7aa80b375ba014fb13d6bb8a",
+      "experiment_safetensors_sha256": {
+        "model-00001-of-00002.safetensors": "a464228d9c9427bf035cfd5a2e18bf0494d7231bfacc478ec5fc9f57a612d051",
+        "model-00002-of-00002.safetensors": "5734c77cf2ff6482713d474ee9c8791cd712b59dd36b05d096af5a4cb41f3f02"
+      },
+      "model_type": "mistral",
+      "architecture": "MistralForCausalLM",
+      "license": "apache-2.0",
+      "gated": false,
+      "trust_remote_code": false,
+      "runtime_environment": "chem2",
+      "experiment_access_date": "2026-01-07",
+      "experiment_access_date_evidence": {
+        "source": "huggingface_local_download_metadata",
+        "timestamp_utc": "2026-01-07T05:11:27Z",
+        "metadata_file": "pytorch_model-00001-of-00002.bin.metadata",
+        "matching_revision_records": 15,
+        "interpretation": "Recorded download or cache-validation time, not proven first download"
+      },
+      "used_revision": "ec5deb64f2c6e6fa90c1abf74a91d5c93a9669ca"
+    },
+    {
+      "cli_name": "gemma",
+      "display_name": "Gemma-2-9B-IT",
+      "repository_id": "google/gemma-2-9b-it",
+      "url": "https://huggingface.co/google/gemma-2-9b-it",
+      "local_directory": "Model/gemma-2-9b-it",
+      "model_type": "gemma2",
+      "architecture": "Gemma2ForCausalLM",
+      "license": "gemma",
+      "gated": true,
+      "trust_remote_code": false,
+      "runtime_environment": "chem2",
+      "experiment_access_date": "2026-03-13",
+      "experiment_access_date_evidence": {
+        "source": "huggingface_local_download_metadata",
+        "timestamp_utc": "2026-03-13T03:46:43Z",
+        "metadata_file": "model-00004-of-00004.safetensors.metadata",
+        "matching_revision_records": 14,
+        "interpretation": "Recorded download or cache-validation time, not proven first download"
+      },
+      "used_revision": "11c9b309abf73637e4b6f9a3fa1e92e615547819"
+    },
+    {
+      "cli_name": "chatglm",
+      "display_name": "ChatGLM3-6B",
+      "repository_id_used": "THUDM/chatglm3-6b",
+      "current_repository_id": "zai-org/chatglm3-6b",
+      "url": "https://huggingface.co/zai-org/chatglm3-6b",
+      "local_directory": "Model/chatglm3-6b",
+      "model_type": "chatglm",
+      "architecture": "ChatGLMModel",
+      "license": "ChatGLM3 model license; repository code is Apache-2.0",
+      "gated": false,
+      "trust_remote_code": true,
+      "runtime_environment": "chem",
+      "experiment_access_date": "2026-03-08",
+      "experiment_access_date_evidence": {
+        "source": "huggingface_local_download_metadata",
+        "timestamp_utc": "2026-03-08T10:04:47Z",
+        "metadata_file": "pytorch_model-00004-of-00007.bin.metadata",
+        "matching_revision_records": 27,
+        "interpretation": "Recorded download or cache-validation time, not proven first download"
+      },
+      "used_revision": "e9e0406d062cdb887444fe5bd546833920abd4ac"
+    },
+    {
+      "cli_name": "chemllm",
+      "display_name": "ChemLLM-7B-Chat",
+      "repository_id": "AI4Chem/ChemLLM-7B-Chat",
+      "url": "https://huggingface.co/AI4Chem/ChemLLM-7B-Chat",
+      "local_directory": "Model/ChemLLM-7B-Chat",
+      "model_type": "internlm",
+      "architecture": "InternLM2ForCausalLM",
+      "license": "apache-2.0 on the model page; verify the model-card weight terms",
+      "gated": false,
+      "trust_remote_code": true,
+      "runtime_environment": "chem",
+      "experiment_access_date": "2026-02-10",
+      "experiment_access_date_evidence": {
+        "source": "huggingface_local_download_metadata",
+        "timestamp_utc": "2026-02-10T08:49:33Z",
+        "metadata_file": "model-00001-of-00002.safetensors.metadata",
+        "matching_revision_records": 13,
+        "interpretation": "Recorded download or cache-validation time, not proven first download"
+      },
+      "used_revision": "b8b2ea19e48f53d190fe8dced94572717f8e89a2"
+    }
+  ]
+}

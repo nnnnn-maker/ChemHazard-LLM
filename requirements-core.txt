@@ -1,0 +1,15 @@
+# Install a CUDA-compatible PyTorch build separately for the target system.
+torch
+transformers
+peft
+accelerate
+bitsandbytes
+sentencepiece
+safetensors
+numpy
+pandas
+aiohttp
+scikit-learn
+rdkit
+openpyxl
+matplotlib

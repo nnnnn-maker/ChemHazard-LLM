@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the archived ChemHazard-LLM release when a DOI is available."
+title: "ChemHazard-LLM: Reproducibility Code for Evidence-Controlled GHS Hazard Classification"
+version: 0.1.0
+type: software
+repository-code: "https://github.com/nnnnn-maker/ChemHazard-LLM"
+url: "https://github.com/nnnnn-maker/ChemHazard-LLM"
+authors:
+  - family-names: "nnnnn"
+keywords:
+  - chemical hazard classification
+  - GHS
+  - large language models
+  - multi-label classification
+  - cheminformatics
+license: MIT

@@ -1,0 +1,6 @@
+# Use a separate Python 3.11 environment.
+chemprop==2.3.*
+numpy
+pandas
+scikit-learn
+rdkit

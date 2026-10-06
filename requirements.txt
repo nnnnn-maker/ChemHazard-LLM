@@ -1,0 +1,3 @@
+# Core ChemHazard-LLM environment. Install the CUDA-compatible PyTorch build
+# for the target machine before installing this file.
+-r requirements-core.txt

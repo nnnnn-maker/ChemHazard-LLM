@@ -1,0 +1,5 @@
+metric,baseline,mistral_lora,delta_mistral_minus_baseline,ci95_low,ci95_high,p_delta_le_0,preferred_direction,interpretation
+subset_accuracy,0.1637,0.2394,0.0758,0.0500,0.1016,0.0000,higher_better,positive_delta_supported
+micro_f1,0.6589,0.7011,0.0422,0.0279,0.0561,0.0000,higher_better,positive_delta_supported
+macro_f1,0.4810,0.5647,0.0837,0.0287,0.1348,0.0064,higher_better,positive_delta_supported
+hamming_loss,0.1731,0.1495,-0.0236,-0.0303,-0.0168,1.0000,lower_better,negative_delta_supported

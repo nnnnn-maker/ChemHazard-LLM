@@ -1,0 +1,72 @@
+{
+  "dataset_name": "NITE Japan-GHS external test set for ChemHazard-LLM",
+  "build_timestamp_local": "2026-09-24 12:17:05",
+  "nite_source_rows": 3476,
+  "nite_rows_with_cas": 3447,
+  "nite_unique_cas": 3435,
+  "pubchem_resolved_source_rows": 3258,
+  "resolved_unique_inchikeys_before_conflict_filter": 3214,
+  "label_conflict_inchikey_groups": 6,
+  "unresolved_or_conflict_rows": 224,
+  "seed123_reference_rows": 11556,
+  "seed123_reference_unique_inchikeys": 11556,
+  "exact_inchikey_overlap_excluded": 2132,
+  "exact_inchikey_disjoint_rows": 1053,
+  "connectivity_block_disjoint_rows": 1016,
+  "exact_disjoint_rows_with_at_least_one_positive": 903,
+  "exact_disjoint_complete_case_rows": 7,
+  "label_summary_exact_disjoint": {
+    "flammable": {
+      "valid": 415,
+      "positive": 110,
+      "negative": 305
+    },
+    "oxidizing": {
+      "valid": 639,
+      "positive": 24,
+      "negative": 615
+    },
+    "gas_under_pressure": {
+      "valid": 1048,
+      "positive": 13,
+      "negative": 1035
+    },
+    "corrosive": {
+      "valid": 151,
+      "positive": 148,
+      "negative": 3
+    },
+    "acute_toxicity": {
+      "valid": 399,
+      "positive": 399,
+      "negative": 0
+    },
+    "irritant_harmful": {
+      "valid": 470,
+      "positive": 470,
+      "negative": 0
+    },
+    "cmr": {
+      "valid": 467,
+      "positive": 411,
+      "negative": 56
+    },
+    "stot": {
+      "valid": 559,
+      "positive": 555,
+      "negative": 4
+    },
+    "environmental_hazard": {
+      "valid": 482,
+      "positive": 413,
+      "negative": 69
+    }
+  },
+  "notes": [
+    "Labels are H-code-compatible coarse mappings, not a broad union of all NITE hazard categories.",
+    "Classification not possible and '-' are masked as unknown, never converted to negative.",
+    "The primary set removes full InChIKey overlap with all 11,556 seed123 experiment compounds.",
+    "The connectivity-disjoint subset additionally removes first-block InChIKey overlap.",
+    "Because the historical PubChem collection did not preserve per-label contributing-source attribution, source independence is audited at the NITE-file level plus exact-structure decontamination; complete upstream provenance independence cannot be proven retrospectively."
+  ]
+}

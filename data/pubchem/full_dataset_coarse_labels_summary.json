@@ -1,0 +1,180 @@
+{
+  "input_file": "full_dataset.csv",
+  "release_note": "The original source path was normalized for portability; see DATA_REQUIREMENTS.md and data/checksums.sha256.",
+  "num_rows": 50000,
+  "rows_with_h_codes": 11565,
+  "rows_with_coarse_labels": 11556,
+  "coarse_label_map": {
+    "flammable": [
+      "H220",
+      "H224",
+      "H225",
+      "H226",
+      "H227",
+      "H228"
+    ],
+    "oxidizing": [
+      "H272"
+    ],
+    "gas_under_pressure": [
+      "H280"
+    ],
+    "corrosive": [
+      "H290",
+      "H314",
+      "H318"
+    ],
+    "acute_toxicity": [
+      "H300",
+      "H301",
+      "H302",
+      "H303",
+      "H304",
+      "H310",
+      "H311",
+      "H312",
+      "H313",
+      "H330",
+      "H331",
+      "H332"
+    ],
+    "irritant_harmful": [
+      "H315",
+      "H316",
+      "H317",
+      "H319",
+      "H320",
+      "H334",
+      "H335",
+      "H336"
+    ],
+    "cmr": [
+      "H340",
+      "H341",
+      "H350",
+      "H351",
+      "H360",
+      "H361",
+      "H362"
+    ],
+    "stot": [
+      "H370",
+      "H371",
+      "H372",
+      "H373"
+    ],
+    "environmental_hazard": [
+      "H400",
+      "H401",
+      "H402",
+      "H410",
+      "H411",
+      "H412",
+      "H413"
+    ]
+  },
+  "coarse_label_distribution": {
+    "irritant_harmful": 7965,
+    "corrosive": 2386,
+    "acute_toxicity": 6828,
+    "environmental_hazard": 3389,
+    "stot": 1882,
+    "cmr": 1984,
+    "flammable": 1989,
+    "gas_under_pressure": 128,
+    "oxidizing": 72
+  },
+  "top_20_h_codes": [
+    [
+      "H319",
+      6210
+    ],
+    [
+      "H315",
+      5959
+    ],
+    [
+      "H335",
+      5320
+    ],
+    [
+      "H302",
+      4744
+    ],
+    [
+      "H318",
+      1845
+    ],
+    [
+      "H400",
+      1661
+    ],
+    [
+      "H332",
+      1549
+    ],
+    [
+      "H301",
+      1547
+    ],
+    [
+      "H317",
+      1464
+    ],
+    [
+      "H410",
+      1447
+    ],
+    [
+      "H312",
+      1400
+    ],
+    [
+      "H314",
+      1347
+    ],
+    [
+      "H373",
+      1136
+    ],
+    [
+      "H411",
+      974
+    ],
+    [
+      "H226",
+      957
+    ],
+    [
+      "H372",
+      883
+    ],
+    [
+      "H361",
+      860
+    ],
+    [
+      "H311",
+      858
+    ],
+    [
+      "H331",
+      786
+    ],
+    [
+      "H412",
+      766
+    ]
+  ],
+  "label_cardinality_distribution": {
+    "0": 38444,
+    "1": 4158,
+    "2": 3428,
+    "3": 1829,
+    "4": 1049,
+    "5": 714,
+    "6": 294,
+    "7": 80,
+    "8": 4
+  }
+}

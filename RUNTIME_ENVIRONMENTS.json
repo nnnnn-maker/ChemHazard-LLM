@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "environments": {
+    "chem2": {
+      "purpose": "Qwen2.5-7B-Instruct, Mistral-7B-Instruct-v0.1, and Gemma-2-9B-IT training and inference",
+      "models": ["qwen", "mistral", "gemma"],
+      "required_packages": [
+        "torch",
+        "transformers",
+        "peft",
+        "accelerate",
+        "bitsandbytes"
+      ],
+      "capture_directory": "reproducibility/environments/chem2"
+    },
+    "chem": {
+      "purpose": "ChatGLM3-6B and ChemLLM-7B-Chat training and inference with model-specific remote code",
+      "models": ["chatglm", "chemllm"],
+      "required_packages": [
+        "torch",
+        "transformers",
+        "peft",
+        "accelerate",
+        "bitsandbytes"
+      ],
+      "capture_directory": "reproducibility/environments/chem"
+    }
+  }
+}

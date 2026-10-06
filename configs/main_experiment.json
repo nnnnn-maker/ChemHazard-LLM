@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "task": "nine-label coarse-grained GHS hazard classification",
+  "labels": [
+    "flammable",
+    "oxidizing",
+    "gas_under_pressure",
+    "corrosive",
+    "acute_toxicity",
+    "irritant_harmful",
+    "cmr",
+    "stot",
+    "environmental_hazard"
+  ],
+  "pubchem_split": {
+    "method": "custom iterative multi-label stratification based on Sechidis et al.",
+    "seed": 123,
+    "expected_unique_records": 11556,
+    "expected_unique_split_counts": {
+      "train": 9244,
+      "validation": 1156,
+      "test": 1156
+    }
+  },
+  "target_label_oversampling": {
+    "factor": 2,
+    "training_only": true,
+    "labels": [
+      "oxidizing",
+      "gas_under_pressure",
+      "cmr",
+      "stot",
+      "environmental_hazard"
+    ],
+    "expected_training_rows_after_replay": 12990
+  },
+  "backbone": {
+    "checkpoint": "mistralai/Mistral-7B-Instruct-v0.1",
+    "revision": "ec5deb64f2c6e6fa90c1abf74a91d5c93a9669ca",
+    "local_directory": "Model/Mistral-7B-Instruct-v0.1",
+    "prompt_format": "historical_plain_role_fallback",
+    "experiment_tokenizer_config_sha256": "ddb008229511e51607002ffe28925001c4a9ca4177dc4de3a655d085cc610b99"
+  },
+  "training": {
+    "member_seeds": [123, 777, 2025],
+    "epochs": 2,
+    "learning_rate": 0.0002,
+    "optimizer": "adamw_torch",
+    "weight_decay": 0.01,
+    "per_device_train_batch_size": 1,
+    "per_device_eval_batch_size": 1,
+    "gradient_accumulation_steps": 16,
+    "max_length": 1024,
+    "precision": "bfloat16",
+    "load_in_4bit": true,
+    "bnb_4bit_compute_dtype": "bfloat16",
+    "bnb_4bit_quant_type": "nf4",
+    "lora": {
+      "rank": 16,
+      "alpha": 32,
+      "dropout": 0.05,
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ]
+    }
+  },
+  "ensemble": {
+    "members": 3,
+    "majority_threshold": 2,
+    "threshold_selection_split": "validation",
+    "threshold_candidates": [1, 2, 3],
+    "threshold_objective": "label-wise F1 with recall tie-break under precision-drop constraints",
+    "precision_drop_limits": {
+      "default": 0.03,
+      "oxidizing": 0.15,
+      "gas_under_pressure": 0.15,
+      "cmr": 0.12
+    },
+    "reported_thresholds": {
+      "flammable": 2,
+      "oxidizing": 1,
+      "gas_under_pressure": 1,
+      "corrosive": 2,
+      "acute_toxicity": 2,
+      "irritant_harmful": 2,
+      "cmr": 1,
+      "stot": 2,
+      "environmental_hazard": 2
+    }
+  },
+  "reported_pubchem_test_metrics": {
+    "micro_precision": 0.7569,
+    "micro_recall": 0.7739,
+    "micro_f1": 0.7653,
+    "macro_f1": 0.7852
+  },
+  "nite_external_test": {
+    "source": "NITE Japan-GHS English workbook updated 2026-09-02",
+    "primary_records": 1053,
+    "decontamination": "exact full InChIKey disjoint from the 11556-compound PubChem experiment universe",
+    "evaluation": "score only cells with label_mask=1"
+  }
+}

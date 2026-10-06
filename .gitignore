@@ -1,0 +1,70 @@
+# Python and local environments
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+.env
+.env.*
+
+# IDE and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs and generated experiment outputs
+*.log
+logs/
+predictions/
+evaluation_llm_coarse/
+analysis_outputs/
+checkpoints_lora_sft/
+checkpoints_chemprop/
+/full_dataset.csv
+/processed_coarse/
+/sft_coarse_jsonl_*/
+/sft_clean_ablation_*/
+reproducibility/*.local.json
+reproducibility/environment.json
+reproducibility/*freeze*.txt
+reproducibility/nvidia_smi*.txt
+
+# Foundation models and learned weights must never enter Git
+Model/
+/tokenizer_config.json
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+
+# Locally retained data that require a redistribution decision.
+# No row-level experimental data, including the ID-level split manifest, enter Git.
+# Aggregate summaries, source metadata, READMEs, and checksums remain trackable.
+*.csv
+!supplementary/scaffold_paired_bootstrap_delta.csv
+*.jsonl
+*.xlsx
+*.docx
+data/pubchem/full_dataset_coarse_labels.csv
+data/pubchem/seed123_split_manifest.csv
+data/pubchem/seed123_simple/*.jsonl
+data/pubchem/seed123_pictograms_rare2x/*.jsonl
+data/nite_japan_ghs/*.csv
+data/nite_japan_ghs/*.jsonl
+data/nite_japan_ghs/*.xlsx
+data/nite_japan_ghs/source/
+
+# Working supplementary documents are not part of the code-only release.
+
+# Temporary release archives
+dist/
+release-artifacts/
+*.zip
+*.tar
+*.tar.gz

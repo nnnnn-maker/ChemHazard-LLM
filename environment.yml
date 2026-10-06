@@ -1,0 +1,14 @@
+name: chemhazard-llm
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - -r requirements-core.txt
+
+# Install a CUDA-compatible PyTorch build for the target GPU/driver before
+# installing the pip requirements. After a successful run, execute
+# `python capture_environment.py` and archive the generated pip freeze and GPU
+# metadata with the release. Chemprop uses the separate environment described
+# in requirements-chemprop.txt.

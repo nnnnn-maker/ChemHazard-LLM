@@ -1,0 +1,20 @@
+{
+  "split_root": "data\\pubchem\\seed123_pictograms_rare2x",
+  "raw_row_counts": {
+    "train": 12990,
+    "val": 1156,
+    "test": 1156
+  },
+  "unique_id_counts": {
+    "train": 9244,
+    "val": 1156,
+    "test": 1156
+  },
+  "jsonl_sha256": {
+    "train.jsonl": "cf1a359a33ef5bfed01e4219a5474fff05d343d6fb93f0b2f5fdc31a3851ac17",
+    "val.jsonl": "aa309fbf633ffa9468173687d963601a07cca5b23bc0805016a23b3088b764b7",
+    "test.jsonl": "63221ebd4d7f427409212ba71f140a4e9e5539f825d1a825e698dbb367315b20"
+  },
+  "manifest_sha256": "596963bb062e825f9e001c0052819b26984a356d2ae721db64ee8bc79fa999bc",
+  "note": "exposure_count is greater than one only when the training JSONL contains replayed rows from target-label oversampling"
+}

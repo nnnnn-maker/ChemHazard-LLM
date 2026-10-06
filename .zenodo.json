@@ -1,0 +1,20 @@
+{
+  "title": "ChemHazard-LLM: Reproducibility Code for Evidence-Controlled GHS Hazard Classification",
+  "version": "0.1.0",
+  "description": "Source code, fixed experiment configuration, data-reconstruction utilities, and evaluation workflows for ChemHazard-LLM. This software archive excludes row-level PubChem and NITE data, source workbooks, model weights, and trained adapters; the MIT license covers only original code and documentation.",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "nnnnn"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "chemical hazard classification",
+    "GHS",
+    "large language models",
+    "multi-label classification",
+    "cheminformatics"
+  ],
+  "access_right": "open"
+}

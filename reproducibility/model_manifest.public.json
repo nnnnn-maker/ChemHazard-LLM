@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "source_capture_utc": "2026-10-05T07:34:14.284587+00:00",
+  "notes": "Sanitized from the validated server capture. Mistral weights match the pinned Instruct revision. The recovered experiment tokenizer file differs from the official snapshot only by lacking chat_template; the reproduction code explicitly uses the historical plain-role prompt. The full directories are not byte-identical.",
+  "models": [
+    {
+      "cli_name": "qwen",
+      "display_name": "Qwen2.5-7B-Instruct",
+      "repository_id": "Qwen/Qwen2.5-7B-Instruct",
+      "used_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+      "experiment_access_date": "2026-01-30",
+      "experiment_access_date_evidence": {
+        "source": "huggingface_local_download_metadata",
+        "timestamp_utc": "2026-01-30T06:57:30Z",
+        "metadata_file": "model-00001-of-00004.safetensors.metadata",
+        "matching_revision_records": 14,
+        "interpretation": "Recorded download or cache-validation time, not proven first download"
+      },
+      "revision_evidence": null,
+      "model_snapshot_verified": null,
+      "observed_model_type": "qwen2",
+      "observed_architectures": [
+        "Qwen2ForCausalLM"
+      ],
+      "identity_file_sha256": {
+        "config.json": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c",
+        "generation_config.json": "3a8f9087e486054c8a4a08dae2e5a3ba62e23da212b5b8c08bc42cb983c3459f",
+        "tokenizer.json": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+        "tokenizer_config.json": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+        "model.safetensors.index.json": "624bf7c47cd12468fdc16e38a47cf4f19e0415b859a223ba3c027eed2f0e1028"
+      },
+      "weight_file_count": 4,
+      "weight_sha256": {
+        "model-00001-of-00004.safetensors": "a1333e6293854747c481288ea83b348226af178dd565c49b6f9495ba1966aba7",
+        "model-00002-of-00004.safetensors": "f5d25a2772cb825164a2a2c0fb6d51a87e282abf21e4dd75bc5cfb3cd0ea6185",
+        "model-00003-of-00004.safetensors": "8efdec4c1bc12317ae1a38dc42b595ce777738a64deea3fcb8a0a91381bcdfd5",
+        "model-00004-of-00004.safetensors": "1a72d403cdf0c1ec3cb7f289f17b394a01e64394c2e9b3c0f94dbce3faf879bd"
+      }
+    },
+    {
+      "cli_name": "mistral",
+      "display_name": "Mistral-7B-Instruct-v0.1",
+      "repository_id": "mistralai/Mistral-7B-Instruct-v0.1",
+      "used_revision": "ec5deb64f2c6e6fa90c1abf74a91d5c93a9669ca",
+      "experiment_access_date": "2026-01-07",
+      "experiment_access_date_evidence": {
+        "source": "huggingface_local_download_metadata",
+        "timestamp_utc": "2026-01-07T05:11:27Z",
+        "metadata_file": "pytorch_model-00001-of-00002.bin.metadata",
+        "matching_revision_records": 15,
+        "interpretation": "Recorded download or cache-validation time, not proven first download"
+      },
+      "revision_evidence": "Validated server weights match the official Instruct revision. The recovered server tokenizer configuration differs only by lacking chat_template; historical plain-role prompting is explicit in the reproduction code.",
+      "model_snapshot_verified": false,
+      "experiment_prompt_equivalent_verified": true,
+      "observed_model_type": "mistral",
+      "observed_architectures": [
+        "MistralForCausalLM"
+      ],
+      "identity_file_sha256": {
+        "config.json": "cf25cdf4719f181d1d1d371973285d9afe9afde0d0c6a6fd48de857555ce1e0d",
+        "generation_config.json": "afcf2a1da583dbeb66bb367a759713901e23ce19ed83ed8f5a21b0e877addd5b",
+        "tokenizer.json": "11c08db21487c885d8c792180f0be237f6a261b89a46f128a6a80a3aa4bd1720",
+        "tokenizer_config.json": "ddb008229511e51607002ffe28925001c4a9ca4177dc4de3a655d085cc610b99",
+        "tokenizer.model": "dadfd56d766715c61d2ef780a525ab43b8e6da4de6865bda3d95fdef5e134055",
+        "special_tokens_map.json": "6fa06efa2785e450051989a6f8fb4416b10149ded485ddd3f127a40734f5cfd0",
+        "model.safetensors.index.json": "c94ab46aaf5fcca44720c10bcc498c1b0d9759d47534a396e3512edc451ebd06",
+        "pytorch_model.bin.index.json": "f2d239108d89fb1568b9041e23f8526879c3fd500f65ac8d7c3204b270b648ef"
+      },
+      "weight_file_count": 4,
+      "weight_sha256": {
+        "model-00001-of-00002.safetensors": "a464228d9c9427bf035cfd5a2e18bf0494d7231bfacc478ec5fc9f57a612d051",
+        "model-00002-of-00002.safetensors": "5734c77cf2ff6482713d474ee9c8791cd712b59dd36b05d096af5a4cb41f3f02",
+        "pytorch_model-00001-of-00002.bin": "2f237251ac3ecb3bcbd8978b3eb7b55b5e83c06cd5224b276d2d8462773488c8",
+        "pytorch_model-00002-of-00002.bin": "d9e54fbaabfe2c5d00d2a642398c5959c1eb31e9d9d40c80bd5d7c2c4067d3e1"
+      }
+    },
+    {
+      "cli_name": "gemma",
+      "display_name": "Gemma-2-9B-IT",
+      "repository_id": "google/gemma-2-9b-it",
+      "used_revision": "11c9b309abf73637e4b6f9a3fa1e92e615547819",
+      "experiment_access_date": "2026-03-13",
+      "experiment_access_date_evidence": {
+        "source": "huggingface_local_download_metadata",
+        "timestamp_utc": "2026-03-13T03:46:43Z",
+        "metadata_file": "model-00004-of-00004.safetensors.metadata",
+        "matching_revision_records": 14,
+        "interpretation": "Recorded download or cache-validation time, not proven first download"
+      },
+      "revision_evidence": null,
+      "model_snapshot_verified": null,
+      "observed_model_type": "gemma2",
+      "observed_architectures": [
+        "Gemma2ForCausalLM"
+      ],
+      "identity_file_sha256": {
+        "config.json": "8ecc124513fdb0bb31bf51b4f0dd6c8658a68296dc8cd30af612205ff4a1bc49",
+        "generation_config.json": "99b4f0bfe91aa4a78fc10018c17de56706db39d6ca87bc76f9be17aed7fe18c9",
+        "tokenizer.json": "3f289bc05132635a8bc7aca7aa21255efd5e18f3710f43e3cdb96bcd41be4922",
+        "tokenizer_config.json": "cb32b7929c62608d46572e813112b3ad8a841fb98fdd6a4da8559e368a951c89",
+        "tokenizer.model": "61a7b147390c64585d6c3543dd6fc636906c9af3865a5548f27f31aee1d4c8e2",
+        "special_tokens_map.json": "baec30ea10906f16adb8c18af7a34023002c1746542612b8b41c9f09e1351351",
+        "model.safetensors.index.json": "c38b39b80b2d7aa422464a9b816af4c30d2177e471b89e5325df1336a23ad284"
+      },
+      "weight_file_count": 4,
+      "weight_sha256": {
+        "model-00001-of-00004.safetensors": "a0d4eb4fcbddfe01b0dc7a58386a3980826ededaf0ecd67d1ef38995b89615ba",
+        "model-00002-of-00004.safetensors": "712a589c333f49f7b6f3870838a9e0ab4b3c0260abd5130e8c54316e6c99640b",
+        "model-00003-of-00004.safetensors": "5a9f84eb9846840802200c6502ccaaebf0a146ee89dcb8822fab795c392dd667",
+        "model-00004-of-00004.safetensors": "3349b4960bbc0bf7e47a624e5c520881adb06e2da4bda6ed14b51c7f647fe26c"
+      }
+    },
+    {
+      "cli_name": "chatglm",
+      "display_name": "ChatGLM3-6B",
+      "repository_id": "THUDM/chatglm3-6b",
+      "used_revision": "e9e0406d062cdb887444fe5bd546833920abd4ac",
+      "experiment_access_date": "2026-03-08",
+      "experiment_access_date_evidence": {
+        "source": "huggingface_local_download_metadata",
+        "timestamp_utc": "2026-03-08T10:04:47Z",
+        "metadata_file": "pytorch_model-00004-of-00007.bin.metadata",
+        "matching_revision_records": 27,
+        "interpretation": "Recorded download or cache-validation time, not proven first download"
+      },
+      "revision_evidence": null,
+      "model_snapshot_verified": null,
+      "observed_model_type": "chatglm",
+      "observed_architectures": [
+        "ChatGLMModel"
+      ],
+      "identity_file_sha256": {
+        "config.json": "415b51f6043ef388860b093fad9c52f4898c426af733871f45e2e0c8b6e1d61e",
+        "tokenizer_config.json": "0100d73f46e943ce29f031a83d17cfe5189ecf55137fab3550d3799ffb4b4f12",
+        "tokenizer.model": "e7dc4c393423b76e4373e5157ddc34803a0189ba96b21ddbb40269d31468a6f2",
+        "special_tokens_map.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "model.safetensors.index.json": "63cd9abcecf941726abbe11d2d4bd9714639095bb6a5a2876ee3d1e50ff61312",
+        "pytorch_model.bin.index.json": "cd61a351c1f7432a0e9a2865633d6690765c9a2087af71babfaa29881b2a13aa"
+      },
+      "weight_file_count": 14,
+      "weight_sha256": {
+        "model-00001-of-00007.safetensors": "b1052386eac358a18add3d0f92521c85ab338979da8eeb08a6499555b857f80d",
+        "model-00002-of-00007.safetensors": "f88d7f69a3940711b87308eb20dd0544df22aff81134fa0d5160d3c859f5d321",
+        "model-00003-of-00007.safetensors": "447d41b7c5e7b2558905c98733469aa9e132540c91e13c4cdd7bfc58b60cc650",
+        "model-00004-of-00007.safetensors": "386305288e2bcc4a26fcffef433c94592d155bf36e365f054f63d3e6b55a1429",
+        "model-00005-of-00007.safetensors": "6c304e2821774d649997d1f5ae5fa12afd4d1dc5fea2bf6e8b829405b81fa7f2",
+        "model-00006-of-00007.safetensors": "ef45bbd33d6d540d3d3523bb169b52b91b9e265176ab7efc6838233bc3b7e95d",
+        "model-00007-of-00007.safetensors": "6eb545c6aa8a839c56a78b80331fcb4fa403341925f79fb6a761e2e847bf1e40",
+        "pytorch_model-00001-of-00007.bin": "4d5567466e89625dbd10e51c69a02982f233a10108cf232a379defdbb065ae0b",
+        "pytorch_model-00002-of-00007.bin": "4ad41534016ac4a2431fa2d4b08efbe28f963744135ec52b2ea13cc86730fa2a",
+        "pytorch_model-00003-of-00007.bin": "a2be9b17c332a8345e787953d4879caee4747ad4b263f013aa3c4654c94c3d24",
+        "pytorch_model-00004-of-00007.bin": "b5526891e1b4c8edd2e3688df5156aa107e2140fe7e3f9d0d54f9cbe3b6ee3b5",
+        "pytorch_model-00005-of-00007.bin": "84bb18a476f74beaf4d941733bd1c475791eba799b228f78d0165de989cb7a40",
+        "pytorch_model-00006-of-00007.bin": "1181875a2dc30fba968d72d0fc4628b9a60d3866bf680eb14b9822b5b504830f",
+        "pytorch_model-00007-of-00007.bin": "1271b638dc0a88206d1c7a51bcaa862410eb56f3e59fd0068a96e96cb5e3f4f0"
+      }
+    },
+    {
+      "cli_name": "chemllm",
+      "display_name": "ChemLLM-7B-Chat",
+      "repository_id": "AI4Chem/ChemLLM-7B-Chat",
+      "used_revision": "b8b2ea19e48f53d190fe8dced94572717f8e89a2",
+      "experiment_access_date": "2026-02-10",
+      "experiment_access_date_evidence": {
+        "source": "huggingface_local_download_metadata",
+        "timestamp_utc": "2026-02-10T08:49:33Z",
+        "metadata_file": "model-00001-of-00002.safetensors.metadata",
+        "matching_revision_records": 13,
+        "interpretation": "Recorded download or cache-validation time, not proven first download"
+      },
+      "revision_evidence": null,
+      "model_snapshot_verified": null,
+      "observed_model_type": "internlm",
+      "observed_architectures": [
+        "InternLM2ForCausalLM"
+      ],
+      "identity_file_sha256": {
+        "config.json": "55dc096bdc77c67c1a66012f563edbf4f917e529e3e971c09140aae0f00fdc42",
+        "generation_config.json": "2bd0bd2d9f048d9a9fe92cd31e98a232ef97512e9d295c1a76f199d2b3c4effe",
+        "tokenizer_config.json": "5d3dbec908cce327fee148e82dbe2d8858cb6445efed9271c6c6eb2ce06ac37a",
+        "tokenizer.model": "f868398fc4e05ee1e8aeba95ddf18ddcc45b8bce55d5093bead5bbf80429b48b",
+        "special_tokens_map.json": "82d96d7a9e6ced037f12394b7ea6a5b02e6ca87e0d11edaa8d60d9be857ce7db",
+        "model.safetensors.index.json": "80b2f780b48a4cd8cbbd497a3cba77e305e3b0db4c03bf12b0eb4333479a9688"
+      },
+      "weight_file_count": 2,
+      "weight_sha256": {
+        "model-00001-of-00002.safetensors": "e3983cfa4917ef705a0925114e0cf171322bedbb728c8bf8278e5d2ff2480a0d",
+        "model-00002-of-00002.safetensors": "fb888c1ea87b236c8538bd4314736ac131ecac770d23d5514d3a7cc29934196d"
+      }
+    }
+  ]
+}
