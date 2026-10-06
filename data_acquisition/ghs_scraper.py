@@ -1,6 +1,6 @@
 """
-PubChem GHS 危险性数据爬取脚本
-为现有化合物数据补充 GHS 分类、H声明、P声明等危险性信息
+PubChem GHS hazard data scraper.
+Adds GHS classifications, hazard statements, and precautionary statements to compound data.
 """
 
 import asyncio
@@ -23,13 +23,13 @@ class GHSScraper:
         delay: float = 0.5
     ):
         """
-        初始化 GHS 数据爬虫
+        Initialize the GHS data scraper.
 
         Args:
-            output_dir: 输出目录
-            max_concurrent: 最大并发请求数（GHS数据较大，建议较低并发）
-            retry_times: 失败重试次数
-            delay: 请求间隔（秒）
+            output_dir: Output directory.
+            max_concurrent: Maximum concurrent requests (use a low value for GHS data).
+            retry_times: Number of retry attempts.
+            delay: Delay between requests, in seconds.
         """
         self.base_url = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view"
         self.output_dir = output_dir
@@ -39,7 +39,7 @@ class GHSScraper:
 
         os.makedirs(output_dir, exist_ok=True)
 
-        # 进度追踪
+        # Track progress.
         self.completed_cids: Set[int] = set()
         self.failed_cids: List[int] = []
         self.all_data: List[Dict] = []
@@ -47,24 +47,24 @@ class GHSScraper:
         self._load_progress()
 
     def _load_progress(self):
-        """加载之前的进度"""
+        """Load previous progress."""
         progress_file = f"{self.output_dir}/ghs_progress.json"
         if os.path.exists(progress_file):
             with open(progress_file, 'r') as f:
                 progress = json.load(f)
                 self.completed_cids = set(progress.get("completed_cids", []))
                 self.failed_cids = progress.get("failed_cids", [])
-            print(f"已加载进度: {len(self.completed_cids)} 个化合物已完成")
+            print(f"Progress loaded: {len(self.completed_cids)} compounds completed")
 
-        # 加载已保存的数据
+        # Load previously saved data.
         data_file = f"{self.output_dir}/ghs_data.json"
         if os.path.exists(data_file):
             with open(data_file, 'r', encoding='utf-8') as f:
                 self.all_data = json.load(f)
-            print(f"已加载 {len(self.all_data)} 条已保存的GHS数据")
+            print(f"Loaded {len(self.all_data)} saved GHS records")
 
     def _save_progress(self):
-        """保存当前进度"""
+        """Save current progress."""
         progress_file = f"{self.output_dir}/ghs_progress.json"
         with open(progress_file, 'w') as f:
             json.dump({
@@ -75,14 +75,14 @@ class GHSScraper:
 
     def _parse_ghs_data(self, json_data: Dict, cid: int) -> Optional[Dict]:
         """
-        解析 PubChem 返回的 GHS 数据
+        Parse GHS data returned by PubChem.
 
         Args:
-            json_data: PubChem API 返回的 JSON 数据
-            cid: 化合物 ID
+            json_data: JSON response from the PubChem API.
+            cid: Compound ID.
 
         Returns:
-            解析后的 GHS 数据字典
+            Parsed GHS data dictionary.
         """
         result = {
             "CID": cid,
@@ -108,12 +108,12 @@ class GHSScraper:
                                     self._extract_ghs_info(sub2, result)
 
         except Exception as e:
-            print(f"CID {cid} 解析错误: {e}")
+            print(f"CID {cid} parse error: {e}")
 
         return result
 
     def _extract_ghs_info(self, ghs_section: Dict, result: Dict):
-        """从 GHS 分类部分提取详细信息"""
+        """Extract details from the GHS classification section."""
         for info in ghs_section.get("Information", []):
             name = info.get("Name", "")
             value = info.get("Value", {})
@@ -140,7 +140,7 @@ class GHSScraper:
                     if pic:
                         result["Pictograms"].append(pic)
 
-        # 提取 GHS 分类
+        # Extract GHS classifications.
         for subsec in ghs_section.get("Section", []):
             heading = subsec.get("TOCHeading", "")
             if heading:
@@ -153,15 +153,15 @@ class GHSScraper:
         semaphore: asyncio.Semaphore
     ) -> Optional[Dict]:
         """
-        获取单个化合物的 GHS 数据
+        Fetch GHS data for one compound.
 
         Args:
-            session: aiohttp 会话
-            cid: 化合物 ID
-            semaphore: 并发控制信号量
+            session: aiohttp session.
+            cid: Compound ID.
+            semaphore: Semaphore controlling concurrency.
 
         Returns:
-            GHS 数据字典
+            GHS data dictionary.
         """
         if cid in self.completed_cids:
             return None
@@ -180,7 +180,7 @@ class GHSScraper:
                             return result
 
                         elif response.status == 404:
-                            # 该化合物没有 GHS 数据
+                            # No GHS data was returned for this compound.
                             result = {
                                 "CID": cid,
                                 "GHS_Classifications": [],
@@ -195,18 +195,18 @@ class GHSScraper:
 
                         elif response.status == 503:
                             wait_time = (attempt + 1) * 5
-                            print(f"CID {cid}: 服务器繁忙，等待 {wait_time} 秒")
+                            print(f"CID {cid}: server busy; waiting {wait_time} seconds")
                             await asyncio.sleep(wait_time)
 
                         else:
                             print(f"CID {cid}: HTTP {response.status}")
 
                 except asyncio.TimeoutError:
-                    print(f"CID {cid}: 超时，重试 {attempt + 1}/{self.retry_times}")
+                    print(f"CID {cid}: timeout; retry {attempt + 1}/{self.retry_times}")
                     await asyncio.sleep(2)
 
                 except Exception as e:
-                    print(f"CID {cid}: 错误 {e}")
+                    print(f"CID {cid}: error {e}")
                     await asyncio.sleep(2)
 
             self.failed_cids.append(cid)
@@ -214,26 +214,26 @@ class GHSScraper:
 
     async def scrape(self, cid_list: List[int]) -> List[Dict]:
         """
-        主爬取函数
+        Scrape GHS data for the requested CIDs.
 
         Args:
-            cid_list: 要爬取的 CID 列表
+            cid_list: CIDs to scrape.
 
         Returns:
-            所有 GHS 数据
+            All retrieved GHS records.
         """
-        # 过滤已完成的
+        # Exclude completed CIDs.
         pending_cids = [cid for cid in cid_list if cid not in self.completed_cids]
         total = len(pending_cids)
 
-        print(f"开始爬取 GHS 数据")
-        print(f"总计: {len(cid_list)} 个化合物")
-        print(f"待爬取: {total} 个")
-        print(f"已完成: {len(self.completed_cids)} 个")
+        print("Starting GHS data scrape")
+        print(f"Total compounds: {len(cid_list)}")
+        print(f"Pending: {total}")
+        print(f"Completed: {len(self.completed_cids)}")
         print("-" * 50)
 
         if total == 0:
-            print("所有化合物已完成爬取")
+            print("All compounds have been processed")
             return self.all_data
 
         semaphore = asyncio.Semaphore(self.max_concurrent)
@@ -255,47 +255,47 @@ class GHSScraper:
                     if isinstance(result, dict):
                         self.all_data.append(result)
                     elif isinstance(result, Exception):
-                        print(f"任务异常: {result}")
+                        print(f"Task error: {result}")
 
-                # 显示进度
+                # Display progress.
                 completed = min(i + batch_size, total)
                 progress = completed / total * 100
                 ghs_count = sum(1 for d in self.all_data if d.get("Has_GHS_Data"))
-                print(f"进度: {completed}/{total} ({progress:.1f}%) - "
-                      f"有GHS数据: {ghs_count}/{len(self.all_data)}")
+                print(f"Progress: {completed}/{total} ({progress:.1f}%) - "
+                      f"records with GHS data: {ghs_count}/{len(self.all_data)}")
 
-                # 保存进度和数据
+                # Save progress and data.
                 self._save_progress()
                 self._save_data()
 
         return self.all_data
 
     def _save_data(self):
-        """保存数据到文件"""
+        """Save data to a file."""
         filepath = f"{self.output_dir}/ghs_data.json"
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(self.all_data, f, ensure_ascii=False, indent=2)
 
     def save_results(self):
-        """保存最终结果"""
+        """Save the final results."""
         if not self.all_data:
-            print("没有数据可保存")
+            print("No data to save")
             return
 
-        # 保存 JSON
+        # Save JSON.
         self._save_data()
-        print(f"已保存 {len(self.all_data)} 条 GHS 数据到 ghs_data.json")
+        print(f"Saved {len(self.all_data)} GHS records to ghs_data.json")
 
-        # 保存 CSV
+        # Save CSV.
         self._save_csv()
 
-        # 统计信息
+        # Display statistics.
         ghs_count = sum(1 for d in self.all_data if d.get("Has_GHS_Data"))
-        print(f"有 GHS 数据的化合物: {ghs_count}/{len(self.all_data)} "
+        print(f"Compounds with GHS data: {ghs_count}/{len(self.all_data)} "
               f"({ghs_count/len(self.all_data)*100:.1f}%)")
 
     def _save_csv(self):
-        """保存为 CSV 格式"""
+        """Save data in CSV format."""
         filepath = f"{self.output_dir}/ghs_data.csv"
 
         with open(filepath, 'w', newline='', encoding='utf-8-sig') as f:
@@ -318,26 +318,26 @@ class GHSScraper:
                 }
                 writer.writerow(row)
 
-        print(f"已保存 CSV 到 {filepath}")
+        print(f"Saved CSV to {filepath}")
 
     def merge_with_compounds(self, compounds_file: str, output_file: str = "compounds_with_ghs.csv"):
         """
-        将 GHS 数据与原始化合物数据合并
+        Merge GHS data with the original compound data.
 
         Args:
-            compounds_file: 原始化合物数据文件路径
-            output_file: 输出文件名
+            compounds_file: Path to the original compound data file.
+            output_file: Output file name.
         """
-        # 读取原始数据
+        # Read the original data.
         compounds = []
         with open(compounds_file, 'r', encoding='utf-8-sig') as f:
             reader = csv.DictReader(f)
             compounds = list(reader)
 
-        # 创建 GHS 数据索引
+        # Index GHS data by CID.
         ghs_index = {item['CID']: item for item in self.all_data}
 
-        # 合并数据
+        # Merge the data.
         merged = []
         for compound in compounds:
             cid = int(compound['CID'])
@@ -352,7 +352,7 @@ class GHSScraper:
             merged_row['Pictograms'] = '|'.join(ghs.get('Pictograms', []))
             merged.append(merged_row)
 
-        # 保存合并后的数据
+        # Save the merged data.
         output_path = f"{self.output_dir}/{output_file}"
         fieldnames = list(merged[0].keys())
 
@@ -361,54 +361,54 @@ class GHSScraper:
             writer.writeheader()
             writer.writerows(merged)
 
-        print(f"已合并数据并保存到 {output_path}")
-        print(f"总计 {len(merged)} 条记录")
+        print(f"Merged data saved to {output_path}")
+        print(f"Total records: {len(merged)}")
 
 
 async def main():
-    """主函数"""
+    """Command-line entry point."""
     import argparse
 
-    parser = argparse.ArgumentParser(description='PubChem GHS 危险性数据爬取工具')
+    parser = argparse.ArgumentParser(description='PubChem GHS hazard data scraper')
     parser.add_argument('--input', type=str, default='pubchem_data/compounds.csv',
-                        help='输入的化合物数据文件')
+                        help='Input compound data file')
     parser.add_argument('--output', type=str, default='pubchem_data',
-                        help='输出目录')
+                        help='Output directory')
     parser.add_argument('--concurrent', type=int, default=3,
-                        help='最大并发数 (默认: 3)')
+                        help='Maximum concurrent requests (default: 3)')
     parser.add_argument('--merge', action='store_true',
-                        help='爬取完成后合并数据')
+                        help='Merge data after scraping')
 
     args = parser.parse_args()
 
-    # 读取 CID 列表
+    # Read the CID list.
     cid_list = []
     with open(args.input, 'r', encoding='utf-8-sig') as f:
         reader = csv.DictReader(f)
         for row in reader:
             cid_list.append(int(row['CID']))
 
-    print(f"从 {args.input} 读取了 {len(cid_list)} 个 CID")
+    print(f"Read {len(cid_list)} CIDs from {args.input}")
 
-    # 创建爬虫
+    # Create the scraper.
     scraper = GHSScraper(
         output_dir=args.output,
         max_concurrent=args.concurrent
     )
 
-    # 开始爬取
+    # Start the scrape.
     start_time = time.time()
     await scraper.scrape(cid_list)
     elapsed = time.time() - start_time
 
-    # 保存结果
+    # Save results.
     scraper.save_results()
 
-    # 合并数据
+    # Merge data.
     if args.merge:
         scraper.merge_with_compounds(args.input)
 
-    print(f"\n爬取完成! 总耗时: {elapsed:.2f} 秒")
+    print(f"\nScrape complete! Elapsed time: {elapsed:.2f} seconds")
 
 
 if __name__ == "__main__":

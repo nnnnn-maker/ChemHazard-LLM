@@ -1,7 +1,8 @@
 """
-危化品泄漏事故研判 - 扩展数据爬取脚本
-爬取毒性数据（LD50/LC50）和物理化学性质（沸点、闪点、蒸气压等）
-用于泄漏物质状态预测和毒性等级预测
+Extended property scraper for hazardous-chemical assessment.
+Retrieves toxicity data (LD50/LC50) and physicochemical properties
+(such as boiling point, flash point, and vapor pressure).
+Originally developed for substance-state and toxicity-class prediction.
 """
 
 import asyncio
@@ -23,12 +24,12 @@ class ExtendedPropertyScraper:
         retry_times: int = 3
     ):
         """
-        初始化扩展属性爬虫
+        Initialize the extended property scraper.
 
         Args:
-            output_dir: 输出目录
-            max_concurrent: 最大并发数
-            retry_times: 重试次数
+            output_dir: Output directory.
+            max_concurrent: Maximum number of concurrent requests.
+            retry_times: Number of retry attempts.
         """
         self.base_url = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view"
         self.output_dir = output_dir
@@ -44,23 +45,23 @@ class ExtendedPropertyScraper:
         self._load_progress()
 
     def _load_progress(self):
-        """加载进度"""
+        """Load previous progress."""
         progress_file = f"{self.output_dir}/extended_progress.json"
         if os.path.exists(progress_file):
             with open(progress_file, 'r') as f:
                 progress = json.load(f)
                 self.completed_cids = set(progress.get("completed_cids", []))
                 self.failed_cids = progress.get("failed_cids", [])
-            print(f"已加载进度: {len(self.completed_cids)} 个化合物已完成")
+            print(f"Progress loaded: {len(self.completed_cids)} compounds completed")
 
         data_file = f"{self.output_dir}/extended_properties.json"
         if os.path.exists(data_file):
             with open(data_file, 'r', encoding='utf-8') as f:
                 self.all_data = json.load(f)
-            print(f"已加载 {len(self.all_data)} 条数据")
+            print(f"Loaded {len(self.all_data)} records")
 
     def _save_progress(self):
-        """保存进度"""
+        """Save current progress."""
         progress_file = f"{self.output_dir}/extended_progress.json"
         with open(progress_file, 'w') as f:
             json.dump({
@@ -71,20 +72,21 @@ class ExtendedPropertyScraper:
 
     def _parse_physical_properties(self, json_data: Dict, cid: int) -> Dict:
         """
-        解析物理化学性质数据
+        Parse physicochemical property data.
 
-        提取：沸点、熔点、闪点、蒸气压、密度、水溶性等
+        Extract boiling point, melting point, flash point, vapor pressure,
+        density, water solubility, and related properties.
         """
         result = {
             "CID": cid,
-            "BoilingPoint": None,      # 沸点 (°C)
-            "MeltingPoint": None,      # 熔点 (°C)
-            "FlashPoint": None,        # 闪点 (°C)
-            "VaporPressure": None,     # 蒸气压 (mmHg)
-            "Density": None,           # 密度 (g/cm³)
-            "WaterSolubility": None,   # 水溶性 (mg/L)
-            "LogP": None,              # 辛醇-水分配系数
-            "PhysicalState": None,     # 物理状态 (solid/liquid/gas)
+            "BoilingPoint": None,      # Boiling point (°C)
+            "MeltingPoint": None,      # Melting point (°C)
+            "FlashPoint": None,        # Flash point (°C)
+            "VaporPressure": None,     # Vapor pressure (mmHg)
+            "Density": None,           # Density (g/cm³)
+            "WaterSolubility": None,   # Water solubility (mg/L)
+            "LogP": None,              # Octanol-water partition coefficient
+            "PhysicalState": None,     # Physical state (solid/liquid/gas)
             "Has_Physical_Data": False
         }
 
@@ -108,12 +110,12 @@ class ExtendedPropertyScraper:
                 result["Has_Physical_Data"] = True
 
         except Exception as e:
-            print(f"CID {cid} 物理性质解析错误: {e}")
+            print(f"CID {cid} physical-property parse error: {e}")
 
         return result
 
     def _extract_experimental_props(self, section: Dict, result: Dict):
-        """提取实验测定的物理性质"""
+        """Extract experimentally measured physical properties."""
         for subsec in section.get("Section", []):
             heading = subsec.get("TOCHeading", "")
 
@@ -131,7 +133,7 @@ class ExtendedPropertyScraper:
                 if not string_val:
                     continue
 
-                # 提取数值
+                # Extract a numeric value.
                 num_match = re.search(r'[-+]?\d*\.?\d+', string_val)
                 num_val = float(num_match.group()) if num_match else None
 
@@ -163,7 +165,7 @@ class ExtendedPropertyScraper:
                         result["PhysicalState"] = "solid"
 
     def _extract_computed_props(self, section: Dict, result: Dict):
-        """提取计算的物理性质"""
+        """Extract computed physical properties."""
         for info in section.get("Information", []):
             name = info.get("Name", "")
             value = info.get("Value", {})
@@ -176,17 +178,17 @@ class ExtendedPropertyScraper:
 
     def _parse_toxicity_data(self, json_data: Dict, cid: int) -> Dict:
         """
-        解析毒性数据
+        Parse toxicity data.
 
-        提取：LD50、LC50、毒性等级等
+        Extract LD50, LC50, toxicity class, and related properties.
         """
         result = {
             "CID": cid,
-            "LD50_oral": None,         # 经口LD50 (mg/kg)
-            "LD50_dermal": None,       # 经皮LD50 (mg/kg)
-            "LC50_inhalation": None,   # 吸入LC50 (ppm 或 mg/L)
-            "Toxicity_Class": None,    # 毒性等级 (1-6, GHS分类)
-            "IDLH": None,              # 立即危害生命健康浓度
+            "LD50_oral": None,         # Oral LD50 (mg/kg)
+            "LD50_dermal": None,       # Dermal LD50 (mg/kg)
+            "LC50_inhalation": None,   # Inhalation LC50 (ppm or mg/L)
+            "Toxicity_Class": None,    # Toxicity class (1-6, GHS classification)
+            "IDLH": None,              # Immediately dangerous to life or health
             "Has_Toxicity_Data": False
         }
 
@@ -206,16 +208,16 @@ class ExtendedPropertyScraper:
                             self._extract_toxicity_values(subsec, result)
 
         except Exception as e:
-            print(f"CID {cid} 毒性数据解析错误: {e}")
+            print(f"CID {cid} toxicity-data parse error: {e}")
 
-        # 根据LD50计算毒性等级
+        # Calculate toxicity class from oral LD50.
         if result["LD50_oral"]:
             result["Toxicity_Class"] = self._calculate_toxicity_class(result["LD50_oral"])
 
         return result
 
     def _extract_toxicity_values(self, section: Dict, result: Dict):
-        """提取毒性数值"""
+        """Extract numeric toxicity values."""
         for subsec in section.get("Section", []):
             heading = subsec.get("TOCHeading", "")
 
@@ -233,7 +235,7 @@ class ExtendedPropertyScraper:
 
                 string_lower = string_val.lower()
 
-                # 提取 LD50/LC50 数值
+                # Extract LD50/LC50 values.
                 num_match = re.search(r'(\d+(?:\.\d+)?)\s*(?:mg/kg|mg/l|ppm)', string_lower)
                 if num_match:
                     num_val = float(num_match.group(1))
@@ -254,15 +256,15 @@ class ExtendedPropertyScraper:
 
     def _calculate_toxicity_class(self, ld50_oral: float) -> int:
         """
-        根据经口LD50计算GHS毒性等级
+        Calculate the GHS toxicity class from oral LD50.
 
-        GHS急性毒性分类（经口）:
-        1类: LD50 ≤ 5 mg/kg
-        2类: 5 < LD50 ≤ 50 mg/kg
-        3类: 50 < LD50 ≤ 300 mg/kg
-        4类: 300 < LD50 ≤ 2000 mg/kg
-        5类: 2000 < LD50 ≤ 5000 mg/kg
-        6类: LD50 > 5000 mg/kg (低毒)
+        Oral acute toxicity classes used by this script:
+        Class 1: LD50 <= 5 mg/kg
+        Class 2: 5 < LD50 <= 50 mg/kg
+        Class 3: 50 < LD50 <= 300 mg/kg
+        Class 4: 300 < LD50 <= 2000 mg/kg
+        Class 5: 2000 < LD50 <= 5000 mg/kg
+        Class 6: LD50 > 5000 mg/kg (lower toxicity)
         """
         if ld50_oral <= 5:
             return 1
@@ -283,11 +285,11 @@ class ExtendedPropertyScraper:
         cid: int,
         semaphore: asyncio.Semaphore
     ) -> Optional[Dict]:
-        """获取单个化合物的扩展数据"""
+        """Fetch extended properties for one compound."""
         if cid in self.completed_cids:
             return None
 
-        # 获取完整的化合物数据
+        # Fetch the full compound record.
         url = f"{self.base_url}/data/compound/{cid}/JSON"
 
         async with semaphore:
@@ -298,13 +300,13 @@ class ExtendedPropertyScraper:
                         if response.status == 200:
                             data = await response.json()
 
-                            # 解析物理性质
+                            # Parse physical properties.
                             physical = self._parse_physical_properties(data, cid)
 
-                            # 解析毒性数据
+                            # Parse toxicity data.
                             toxicity = self._parse_toxicity_data(data, cid)
 
-                            # 合并结果
+                            # Merge the results.
                             result = {**physical}
                             for key, val in toxicity.items():
                                 if key != "CID":
@@ -324,33 +326,33 @@ class ExtendedPropertyScraper:
 
                         elif response.status == 503:
                             wait_time = (attempt + 1) * 5
-                            print(f"CID {cid}: 服务器繁忙，等待 {wait_time} 秒")
+                            print(f"CID {cid}: server busy; waiting {wait_time} seconds")
                             await asyncio.sleep(wait_time)
 
                 except asyncio.TimeoutError:
-                    print(f"CID {cid}: 超时，重试 {attempt + 1}/{self.retry_times}")
+                    print(f"CID {cid}: timeout; retry {attempt + 1}/{self.retry_times}")
                     await asyncio.sleep(2)
 
                 except Exception as e:
-                    print(f"CID {cid}: 错误 {e}")
+                    print(f"CID {cid}: error {e}")
                     await asyncio.sleep(2)
 
             self.failed_cids.append(cid)
             return None
 
     async def scrape(self, cid_list: List[int]) -> List[Dict]:
-        """主爬取函数"""
+        """Scrape extended properties for the requested CIDs."""
         pending_cids = [cid for cid in cid_list if cid not in self.completed_cids]
         total = len(pending_cids)
 
-        print(f"开始爬取扩展属性数据")
-        print(f"总计: {len(cid_list)} 个化合物")
-        print(f"待爬取: {total} 个")
-        print(f"已完成: {len(self.completed_cids)} 个")
+        print("Starting extended-property scrape")
+        print(f"Total compounds: {len(cid_list)}")
+        print(f"Pending: {total}")
+        print(f"Completed: {len(self.completed_cids)}")
         print("-" * 50)
 
         if total == 0:
-            print("所有化合物已完成爬取")
+            print("All compounds have been processed")
             return self.all_data
 
         semaphore = asyncio.Semaphore(self.max_concurrent)
@@ -372,13 +374,13 @@ class ExtendedPropertyScraper:
                     if isinstance(result, dict):
                         self.all_data.append(result)
 
-                # 显示进度
+                # Display progress.
                 completed = min(i + batch_size, total)
                 progress = completed / total * 100
                 phys_count = sum(1 for d in self.all_data if d.get("Has_Physical_Data"))
                 tox_count = sum(1 for d in self.all_data if d.get("Has_Toxicity_Data"))
-                print(f"进度: {completed}/{total} ({progress:.1f}%) - "
-                      f"物理数据: {phys_count}, 毒性数据: {tox_count}")
+                print(f"Progress: {completed}/{total} ({progress:.1f}%) - "
+                      f"physical data: {phys_count}, toxicity data: {tox_count}")
 
                 self._save_progress()
                 self._save_data()
@@ -386,21 +388,21 @@ class ExtendedPropertyScraper:
         return self.all_data
 
     def _save_data(self):
-        """保存数据"""
+        """Save data."""
         filepath = f"{self.output_dir}/extended_properties.json"
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(self.all_data, f, ensure_ascii=False, indent=2)
 
     def save_results(self):
-        """保存最终结果"""
+        """Save the final results."""
         if not self.all_data:
-            print("没有数据可保存")
+            print("No data to save")
             return
 
         self._save_data()
-        print(f"已保存 {len(self.all_data)} 条数据到 extended_properties.json")
+        print(f"Saved {len(self.all_data)} records to extended_properties.json")
 
-        # 保存 CSV
+        # Save CSV.
         filepath = f"{self.output_dir}/extended_properties.csv"
         fieldnames = [
             'CID', 'BoilingPoint', 'MeltingPoint', 'FlashPoint', 'VaporPressure',
@@ -414,54 +416,54 @@ class ExtendedPropertyScraper:
             writer.writeheader()
             writer.writerows(self.all_data)
 
-        print(f"已保存 CSV 到 {filepath}")
+        print(f"Saved CSV to {filepath}")
 
-        # 统计
+        # Display statistics.
         phys_count = sum(1 for d in self.all_data if d.get("Has_Physical_Data"))
         tox_count = sum(1 for d in self.all_data if d.get("Has_Toxicity_Data"))
-        print(f"\n数据统计:")
-        print(f"  有物理性质数据: {phys_count}/{len(self.all_data)} ({phys_count/len(self.all_data)*100:.1f}%)")
-        print(f"  有毒性数据: {tox_count}/{len(self.all_data)} ({tox_count/len(self.all_data)*100:.1f}%)")
+        print("\nDataset statistics:")
+        print(f"  Records with physical data: {phys_count}/{len(self.all_data)} ({phys_count/len(self.all_data)*100:.1f}%)")
+        print(f"  Records with toxicity data: {tox_count}/{len(self.all_data)} ({tox_count/len(self.all_data)*100:.1f}%)")
 
     def merge_all_data(self, compounds_file: str, ghs_file: str, output_file: str = "full_dataset.csv"):
         """
-        合并所有数据：基础属性 + GHS数据 + 扩展属性
+        Merge basic compound, GHS, and extended-property data.
 
         Args:
-            compounds_file: 基础化合物数据
-            ghs_file: GHS数据
-            output_file: 输出文件名
+            compounds_file: Basic compound data file.
+            ghs_file: GHS data file.
+            output_file: Output file name.
         """
-        print("\n合并所有数据...")
+        print("\nMerging all data...")
 
-        # 读取基础数据
+        # Read basic compound data.
         compounds = {}
         with open(compounds_file, 'r', encoding='utf-8-sig') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 compounds[int(row['CID'])] = row
 
-        # 读取 GHS 数据
+        # Read GHS data.
         ghs_data = {}
         with open(ghs_file, 'r', encoding='utf-8-sig') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 ghs_data[int(row['CID'])] = row
 
-        # 创建扩展数据索引
+        # Index extended-property data by CID.
         extended_index = {item['CID']: item for item in self.all_data}
 
-        # 合并
+        # Merge the data.
         merged = []
         for cid, compound in compounds.items():
             row = compound.copy()
 
-            # 添加 GHS 数据
+            # Add GHS data.
             ghs = ghs_data.get(cid, {})
             for key in ['Has_GHS_Data', 'Signal_Word', 'H_Statements']:
                 row[key] = ghs.get(key, '')
 
-            # 添加扩展数据
+            # Add extended-property data.
             ext = extended_index.get(cid, {})
             for key in ['BoilingPoint', 'MeltingPoint', 'FlashPoint', 'VaporPressure',
                         'Density', 'WaterSolubility', 'PhysicalState',
@@ -470,7 +472,7 @@ class ExtendedPropertyScraper:
 
             merged.append(row)
 
-        # 保存
+        # Save the merged data.
         output_path = f"{self.output_dir}/{output_file}"
         fieldnames = list(merged[0].keys())
 
@@ -479,57 +481,57 @@ class ExtendedPropertyScraper:
             writer.writeheader()
             writer.writerows(merged)
 
-        print(f"已保存完整数据集到 {output_path}")
-        print(f"总计 {len(merged)} 条记录")
+        print(f"Complete dataset saved to {output_path}")
+        print(f"Total records: {len(merged)}")
 
 
 async def main():
-    """主函数"""
+    """Command-line entry point."""
     import argparse
 
-    parser = argparse.ArgumentParser(description='危化品扩展属性爬取工具')
+    parser = argparse.ArgumentParser(description='Hazardous-chemical extended-property scraper')
     parser.add_argument('--input', type=str, default='pubchem_data/compounds.csv',
-                        help='输入的化合物数据文件')
+                        help='Input compound data file')
     parser.add_argument('--output', type=str, default='pubchem_data',
-                        help='输出目录')
+                        help='Output directory')
     parser.add_argument('--concurrent', type=int, default=3,
-                        help='最大并发数')
+                        help='Maximum number of concurrent requests')
     parser.add_argument('--merge', action='store_true',
-                        help='爬取完成后合并所有数据')
+                        help='Merge all data after scraping')
 
     args = parser.parse_args()
 
-    # 读取 CID 列表
+    # Read the CID list.
     cid_list = []
     with open(args.input, 'r', encoding='utf-8-sig') as f:
         reader = csv.DictReader(f)
         for row in reader:
             cid_list.append(int(row['CID']))
 
-    print(f"从 {args.input} 读取了 {len(cid_list)} 个 CID")
+    print(f"Read {len(cid_list)} CIDs from {args.input}")
 
-    # 创建爬虫
+    # Create the scraper.
     scraper = ExtendedPropertyScraper(
         output_dir=args.output,
         max_concurrent=args.concurrent
     )
 
-    # 开始爬取
+    # Start the scrape.
     start_time = time.time()
     await scraper.scrape(cid_list)
     elapsed = time.time() - start_time
 
-    # 保存结果
+    # Save results.
     scraper.save_results()
 
-    # 合并数据
+    # Merge data.
     if args.merge:
         scraper.merge_all_data(
             args.input,
             f"{args.output}/ghs_data.csv"
         )
 
-    print(f"\n爬取完成! 总耗时: {elapsed:.2f} 秒")
+    print(f"\nScrape complete! Elapsed time: {elapsed:.2f} seconds")
 
 
 if __name__ == "__main__":
