@@ -1,6 +1,6 @@
 # Release status (2026-10-06)
 
-This folder is prepared as a **development-stage, code-only** software package. The sole named software author is `nnnnn`; the intended GitHub repository is `https://github.com/nnnnn-maker/ChemHazard-LLM`. No GitHub Release or Zenodo DOI has been created by this package-preparation step.
+This folder is prepared as a **development-stage, code-only** software package. The sole named software author is Yaning Fan; the intended GitHub repository is `https://github.com/nnnnn-maker/ChemHazard-LLM`. No GitHub Release or Zenodo DOI has been created by this package-preparation step.
 
 The first code-only release version is set to `0.1.0` consistently in `VERSION`, `CITATION.cff`, and `.zenodo.json`. The development audit passes. The strict release audit intentionally has one remaining error because the actual release date has not yet been set in `CITATION.cff`. Add the date only on the publication day; the planned Git tag and GitHub Release are `v0.1.0`.
 

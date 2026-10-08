@@ -6,7 +6,8 @@ type: software
 repository-code: "https://github.com/nnnnn-maker/ChemHazard-LLM"
 url: "https://github.com/nnnnn-maker/ChemHazard-LLM"
 authors:
-  - family-names: "nnnnn"
+  - family-names: "Fan"
+    given-names: "Yaning"
 keywords:
   - chemical hazard classification
   - GHS

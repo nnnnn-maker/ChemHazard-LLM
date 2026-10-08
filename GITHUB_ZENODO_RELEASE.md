@@ -4,8 +4,8 @@ This repository is designed for a versioned GitHub **code-only** release that is
 
 ## 1. Complete release metadata
 
-1. Confirm that the root `LICENSE` (MIT, copyright 2026 nnnnn) applies to all original source files being released; keep third-party data and model permissions separate.
-2. Review the existing `CITATION.cff` and `.zenodo.json`. They identify only `nnnnn` as author/creator and use the supplied repository URL. Do not invent an affiliation, ORCID, historical access date, release date, or DOI.
+1. Confirm that the root `LICENSE` (MIT, copyright 2026 Yaning Fan) applies to all original source files being released; keep third-party data and model permissions separate.
+2. Review the existing `CITATION.cff` and `.zenodo.json`. They identify only Yaning Fan as author/creator and use the supplied repository URL. Do not invent an affiliation, ORCID, historical access date, release date, or DOI.
 3. The first code-only release version is `0.1.0` in `VERSION`, `CITATION.cff`, and `.zenodo.json`. On the actual publication day, add that date to `CITATION.cff` and move the planned changelog entry into a dated release section. If the publication is postponed, use the actual later date; do not invent one in advance.
 4. Recheck the recorded `used_revision` values against the validated server. The five `experiment_access_date` values are now backed by revision-matching local download metadata and mean recorded download/cache-validation dates, not first-download dates; preserve their evidence fields and do not substitute manuscript webpage-access dates. The recovered Mistral tokenizer configuration lacks only the official snapshot's `chat_template`; retain the explicit historical plain-role prompt in training and inference. Do not mark the full model directory byte-identical.
 5. Capture both runtime environments declared in `RUNTIME_ENVIRONMENTS.json`: `chem2` for Qwen/Mistral/Gemma and `chem` for ChatGLM/ChemLLM.

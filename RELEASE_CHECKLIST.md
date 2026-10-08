@@ -33,7 +33,7 @@ Run `python check_public_release.py --final` immediately before creating the rel
 ## Release gates
 
 - A root `LICENSE` file has been approved by the code copyright holders; its terms are not presented as applying to third-party data or model weights.
-- `CITATION.cff` and `.zenodo.json` identify only `nnnnn`, use the supplied repository URL, and have matching title/license/version (`0.1.0`). Add the actual release date at release time; leave unknown affiliation, ORCID, and DOI absent.
+- `CITATION.cff` and `.zenodo.json` identify only Yaning Fan, use the supplied repository URL, and have matching title/license/version (`0.1.0`). Add the actual release date at release time; leave unknown affiliation, ORCID, and DOI absent.
 - `VERSION`, Git tag, GitHub Release title, and Zenodo software version agree.
 - NITE source files and row-level derived records are not tracked unless redistribution permission has been documented.
 - PubChem-derived row-level files are not tracked unless source-level redistribution terms have been reviewed.

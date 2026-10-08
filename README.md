@@ -47,11 +47,11 @@ The current readiness and unresolved publication items are recorded in `RELEASE_
 
 The public source repository is intended to be released with a semantic version tag and archived through the GitHub-Zenodo integration. Follow `GITHUB_ZENODO_RELEASE.md` and run `python check_public_release.py --final` before creating a release tag. `PUBLIC_RELEASE_CONTENTS.md` distinguishes source files from data and model artifacts that require separate licensing or archival decisions.
 
-The sole named author is `nnnnn`; `CITATION.cff` and `.zenodo.json` use the supplied GitHub repository URL. No ORCID, affiliation, release date, final version, or Zenodo DOI has been invented. Add the final version/date at release time and the DOI after Zenodo registration.
+The sole named author is Yaning Fan; `CITATION.cff` and `.zenodo.json` use the supplied GitHub repository URL. No ORCID, affiliation, release date, final version, or Zenodo DOI has been invented. Add the final version/date at release time and the DOI after Zenodo registration.
 
 ## License
 
-Original source code and documentation in this repository are released under the MIT License; see `LICENSE` (copyright 2026 nnnnn). This license does not grant rights to third-party PubChem or NITE source material, foundation-model weights, tokenizers, or other externally licensed assets. Review each data and model source separately before redistribution.
+Original source code and documentation in this repository are released under the MIT License; see `LICENSE` (copyright 2026 Yaning Fan). This license does not grant rights to third-party PubChem or NITE source material, foundation-model weights, tokenizers, or other externally licensed assets. Review each data and model source separately before redistribution.
 
 All shell commands assume Linux and that the current directory is the root of this package. The LLM experiments require an NVIDIA CUDA environment. Chemprop should be installed in a separate Python 3.11 environment.
 
