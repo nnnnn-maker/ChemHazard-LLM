@@ -43,9 +43,11 @@ Model/
 *.pth
 *.ckpt
 
-# Locally retained data that require a redistribution decision.
-# No row-level experimental data, including the ID-level split manifest, enter Git.
-# Aggregate summaries, source metadata, READMEs, and checksums remain trackable.
+# Locally retained data are excluded from this code-only release.
+# Revisit this rule only when the exact experimental datasets can be distributed.
+/data/
+
+# Other data-like files that require a redistribution decision.
 *.csv
 !supplementary/scaffold_paired_bootstrap_delta.csv
 *.jsonl

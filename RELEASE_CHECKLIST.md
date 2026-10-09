@@ -21,7 +21,7 @@ Run `python check_public_release.py --final` immediately before creating the rel
 
 ## Commit with the code-only release
 
-- `data/pubchem/seed123_split_manifest.metadata.json` and `data/checksums.sha256`; these record historical identities without exposing per-compound rows. Keep `data/pubchem/seed123_split_manifest.csv` ignored.
+- Keep the entire `data/` directory out of the code-only release. Dataset counts and historical input hashes are documented in `DATA_REQUIREMENTS.md` and `DATASET_CARD.md`.
 - `reproducibility/environments/chem2/{environment.json,pip_freeze.txt,nvidia_smi.txt}` for Qwen, Mistral, and Gemma.
 - `reproducibility/environments/chem/{environment.json,pip_freeze.txt,nvidia_smi.txt}` for ChatGLM and ChemLLM.
 - `reproducibility/model_manifest.public.json`, sanitized from the local server capture and containing revisions and checksums for all five backbones. Keep `model_manifest.local.json` ignored because it contains machine-specific paths; a current upstream HEAD is not an acceptable substitute.

@@ -1,8 +1,8 @@
 # Data requirements for the code-only release
 
-The public GitHub repository and its Zenodo **software** archive contain code, experiment settings, aggregate summaries, source metadata, and checksums. They do **not** contain the processed PubChem table, fixed train/validation/test JSONL files, the ID-level split manifest, the official NITE workbook, or any row-level NITE-derived files. These files remain local while redistribution rights are reviewed. The MIT software license does not apply to them.
+The public GitHub repository and its Zenodo **software** archive contain code, experiment settings, and data-preparation instructions. The `data/` directory is not distributed. In particular, the package does **not** contain the processed PubChem table, fixed train/validation/test JSONL files, the ID-level split manifest, the official NITE workbook, or any row-level NITE-derived files. These files remain local while redistribution rights are reviewed. The MIT software license does not apply to them.
 
-Consequently, the public package alone cannot reproduce the exact historical result tables. A reader can inspect the methods and rerun the pipeline only after obtaining the same input data under the applicable source terms. The checksums identify the historical inputs; they do not provide access to those inputs.
+Consequently, the public package alone cannot reproduce the exact historical result tables. A reader can inspect the methods and rerun the pipeline only after obtaining the same input data under the applicable source terms. The historical hashes stated below identify specific files; they do not provide access to those files.
 
 ## PubChem development data
 
@@ -22,4 +22,4 @@ Its recorded SHA-256 is `79e5cba0a79af3e60da39d9bbcc0e13c2581ab90b11dba90582b7e7
 
 Unknown NITE classifications are represented by `label_mask=0`, not negative labels. Scores use only cells with `label_mask=1`.
 
-See `DATASET_CARD.md`, `data/README.md`, and `data/checksums.sha256` for the recorded dataset identities. If redistribution is later cleared, publish permitted row-level files in a separately versioned data record with their own license, source attribution, checksums, and DOI; do not add them silently to the MIT-licensed software archive.
+See `DATASET_CARD.md` for dataset scope and limitations. If redistribution is later cleared, publish only the experimental datasets needed for the reported results, with explicit source terms, version, and checksums; do not add them silently to the MIT-licensed software archive.

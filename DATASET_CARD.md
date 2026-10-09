@@ -1,6 +1,6 @@
 # ChemHazard-LLM experimental dataset card
 
-This card documents the historical experiment datasets. The public release is **code-only**: no row-level PubChem or NITE records, ID-level split manifest, or official workbook are redistributed. Dataset counts, aggregate summaries, source metadata, and checksums are descriptive, not a substitute for the original inputs.
+This card documents the historical experiment datasets. The public release is **code-only**: the `data/` directory, row-level PubChem or NITE records, ID-level split manifest, and official workbook are not distributed. The counts and hashes documented here are descriptive, not a substitute for the original inputs.
 
 ## PubChem development set
 
@@ -12,7 +12,7 @@ This card documents the historical experiment datasets. The public release is **
 - Main ChemHazard-LLM setting: pictogram weak evidence and training-only rare2x oversampling; 12,990 effective training rows, with validation and test unchanged.
 - Oversampling targets: `oxidizing`, `gas_under_pressure`, `cmr`, `stot`, and `environmental_hazard`.
 
-The processed source table, JSONL splits, and per-ID split manifest exist locally but are excluded from the software release. The released aggregate summary files and `data/pubchem/seed123_split_manifest.metadata.json` record counts and SHA-256 identities without publishing the records themselves. The original collection procedure and export hash are now recorded; the exact historical API responses and original snapshot are not public here, so a fresh download is not guaranteed to reproduce the fixed split or reported scores.
+The processed source table, JSONL splits, and per-ID split manifest exist locally but are excluded from the software release. The original collection procedure and export hash are documented in `DATA_REQUIREMENTS.md`; the exact historical API responses and original snapshot are not public here, so a fresh download is not guaranteed to reproduce the fixed split or reported scores.
 
 ## NITE Japan-GHS external set
 
@@ -22,8 +22,8 @@ The processed source table, JSONL splits, and per-ID split manifest exist locall
 - Connectivity-block-disjoint sensitivity subset: 1,016 compounds.
 - Unknown, blank, `-`, and `Classification not possible` cells remain unknown and are excluded from scoring through `label_mask=0`.
 
-The model input omits NITE classification text, signal words, pictograms, and hazard statements. Aggregate source-audit and summary JSON files are included; the official workbook, audit spreadsheets, and row-level external records remain local. The recorded workbook checksum is in `DATA_REQUIREMENTS.md` and `data/checksums.sha256`.
+The model input omits NITE classification text, signal words, pictograms, and hazard statements. The official workbook, audit spreadsheets, source-audit summaries, and row-level external records remain local. The recorded workbook checksum is in `DATA_REQUIREMENTS.md`.
 
 ## Integrity and limitations
 
-`data/checksums.sha256` documents the historical local files, including files not distributed. Running `generate_data_checksums.py` on a different download may produce different hashes. Code and checksums support auditing, but the current software archive alone does not guarantee exact historical reruns. A future data record, if rights permit, must separately identify its source terms, version, retrieval date, schema, and checksums.
+The historical PubChem and NITE input hashes are stated in `DATA_REQUIREMENTS.md`. Running `generate_data_checksums.py` on a different download may produce different hashes. The current software archive alone does not guarantee exact historical reruns. A future data release, if rights permit, must identify its source terms, version, retrieval date, schema, and checksums.

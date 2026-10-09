@@ -78,6 +78,7 @@ def relative(path: Path, root: Path) -> str:
 def is_restricted_public_path(rel: str) -> bool:
     return (
         rel in RESTRICTED_PUBLIC_PATHS
+        or rel.startswith("data/")
         or rel == "full_dataset.csv"
         or rel.startswith("processed_coarse/")
         or rel.startswith("sft_coarse_jsonl_")

@@ -5,7 +5,7 @@
 - source code for preprocessing, training, inference, evaluation, baselines, ablations, figures, scaffold splitting, bootstrap analysis, and NITE construction;
 - fixed experiment configurations and seed/threshold declarations;
 - model repository identifiers, exact revisions, a sanitized public checksum manifest, and identity-capture utilities;
-- aggregate data summaries, non-row-level split metadata, dataset card, and SHA-256 manifests;
+- dataset card and data-preparation instructions; the `data/` directory is excluded;
 - environment specifications, sanitized `chem2`/`chem` runtime captures, release documentation, and automated release checks.
 
 ## Kept locally but excluded from the public source repository

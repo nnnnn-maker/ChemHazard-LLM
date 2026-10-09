@@ -16,7 +16,7 @@ The DOI does not yet exist before the first GitHub-integrated Zenodo archive. Fo
 
 ## 2. Keep restricted and large artifacts out of Git
 
-The repository should contain source code, configurations, aggregate summaries, non-row-level split metadata, checksums, and reconstruction instructions. The following local files are intentionally ignored pending a redistribution decision:
+The repository should contain source code, configurations, and reconstruction instructions. The entire local `data/` directory is intentionally ignored pending a redistribution decision, including the following files:
 
 - the official NITE workbook and row-level NITE-derived CSV/JSONL/XLSX files;
 - the processed PubChem table, generated JSONL splits, and per-compound split manifest;

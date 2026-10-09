@@ -1,6 +1,6 @@
 # ChemHazard-LLM reproducibility package
 
-This is a **code-only** reproducibility package for ChemHazard-LLM. It includes the experiment implementation, configurations, aggregate audits, and input checksums. Row-level PubChem and NITE data (including the ID-level split manifest), model weights, LoRA adapters, and generated predictions are intentionally excluded. The public package alone cannot reproduce the paper's exact historical scores without access to the same inputs; see `DATA_REQUIREMENTS.md`.
+This is a **code-only** reproducibility package for ChemHazard-LLM. It includes the experiment implementation, configurations, and data-preparation instructions. The repository's `data/` directory is excluded; row-level PubChem and NITE data (including the ID-level split manifest), model weights, LoRA adapters, and generated predictions are not distributed. The public package alone cannot reproduce the paper's exact historical scores without access to the same inputs; see `DATA_REQUIREMENTS.md`.
 
 ## Scope
 
