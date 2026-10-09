@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import os
 from pathlib import Path
 
 
@@ -15,10 +14,6 @@ DISPLAY_METRICS = [
     ("subset_accuracy", "subset_accuracy"),
     ("hamming_loss", "hamming_loss"),
 ]
-
-HEADER_COLOR = "#4f78c8"
-ROW_COLORS = ("#c1cae2", "#d8ddea")
-EDGE_COLOR = "white"
 
 
 def read_csv_rows(path: Path) -> list[dict[str, str]]:
@@ -45,6 +40,8 @@ def load_rows(args: argparse.Namespace) -> list[dict[str, object]]:
 
     input_dir = Path(args.input_dir)
     metric_paths = sorted(input_dir.glob("*_metrics.json"))
+    if not metric_paths:
+        metric_paths = sorted(input_dir.glob("*/*_metrics.json"))
     if not metric_paths:
         metric_paths = sorted(input_dir.glob("*/metrics.json"))
     if not metric_paths:
@@ -115,52 +112,6 @@ def write_markdown(path: Path, headers: list[str], table_rows: list[list[str]]) 
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def render_png(path: Path, headers: list[str], table_rows: list[list[str]]) -> None:
-    mpl_config_dir = path.parent / ".matplotlib"
-    mpl_config_dir.mkdir(parents=True, exist_ok=True)
-    os.environ.setdefault("MPLCONFIGDIR", str(mpl_config_dir))
-    try:
-        import matplotlib.pyplot as plt
-    except ImportError as exc:
-        raise SystemExit(
-            "matplotlib is required for --png-output but is not installed."
-        ) from exc
-
-    col_widths = [0.22] + [0.195] * (len(headers) - 1)
-    fig_width = max(10.5, 1.9 * len(headers))
-    fig_height = max(3.6, 0.95 * (len(table_rows) + 1))
-    fig, ax = plt.subplots(figsize=(fig_width, fig_height), dpi=200)
-    ax.axis("off")
-
-    table = ax.table(
-        cellText=table_rows,
-        colLabels=headers,
-        cellLoc="center",
-        colLoc="center",
-        loc="center",
-        bbox=[0, 0, 1, 1],
-        colWidths=col_widths,
-    )
-    table.auto_set_font_size(False)
-    table.set_fontsize(13)
-    table.scale(1.08, 1.7)
-
-    for (row_index, col_index), cell in table.get_celld().items():
-        cell.set_edgecolor(EDGE_COLOR)
-        if row_index == 0:
-            cell.set_facecolor(HEADER_COLOR)
-            cell.get_text().set_color("white")
-            cell.get_text().set_weight("bold")
-        else:
-            cell.set_facecolor(ROW_COLORS[(row_index - 1) % len(ROW_COLORS)])
-            if col_index == 0:
-                cell.get_text().set_weight("medium")
-
-    path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, bbox_inches="tight", pad_inches=0.02)
-    plt.close(fig)
-
-
 def main() -> None:
     project_dir = Path(__file__).resolve().parent
     parser = argparse.ArgumentParser(
@@ -191,16 +142,6 @@ def main() -> None:
         default=str(project_dir / "evaluation_llm_coarse" / "comparison_table.md"),
         help="Markdown table output path.",
     )
-    parser.add_argument(
-        "--png-output",
-        default=str(project_dir / "evaluation_llm_coarse" / "comparison_table.png"),
-        help="PNG table output path.",
-    )
-    parser.add_argument(
-        "--skip-png",
-        action="store_true",
-        help="Skip PNG rendering and only write CSV/Markdown outputs.",
-    )
     args = parser.parse_args()
 
     leaderboard_path = Path(args.leaderboard)
@@ -221,13 +162,8 @@ def main() -> None:
     headers, table_rows = build_table_rows(selected_rows)
     write_wide_csv(Path(args.csv_output), headers, table_rows)
     write_markdown(Path(args.md_output), headers, table_rows)
-    if not args.skip_png:
-        render_png(Path(args.png_output), headers, table_rows)
-
     print(f"CSV written to: {args.csv_output}")
     print(f"Markdown written to: {args.md_output}")
-    if not args.skip_png:
-        print(f"PNG written to: {args.png_output}")
 
 
 if __name__ == "__main__":

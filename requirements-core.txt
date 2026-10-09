@@ -12,4 +12,3 @@ aiohttp
 scikit-learn
 rdkit
 openpyxl
-matplotlib

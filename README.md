@@ -94,7 +94,7 @@ The five target-label oversampling labels are `oxidizing`, `gas_under_pressure`,
 | Ensemble and label-wise voting | `combine_multilabel_votes.py`, `calibrate_multilabel_vote_thresholds.py` |
 | NITE label-mask evaluation | `external_validation/nite_japan_ghs/evaluate_nite_external_predictions.py` |
 | Scaffold split and bootstrap | `build_pubchem_coarse_scaffold_sft_dataset.py`, `bootstrap_ci_pubchem.py`, `paired_bootstrap_delta.py` |
-| Main metrics and tables | `evaluate_pubchem_coarse_predictions.py`, `summarize_pubchem_coarse_llm_results.py`, plotting scripts |
+| Main metrics and tables | `evaluate_pubchem_coarse_predictions.py`, `summarize_pubchem_coarse_llm_results.py` (CSV/Markdown summaries) |
 | Environment specification | `requirements.txt`, `environment.yml`, `requirements-chemprop.txt`, `capture_environment.py` |
 | Model-to-runtime mapping | `RUNTIME_ENVIRONMENTS.json` |
 | Five backbone identities and revisions | `MODEL_MANIFEST.json`, `MODEL_REQUIREMENTS.md`, `capture_model_manifest.py` |

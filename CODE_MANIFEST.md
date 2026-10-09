@@ -28,16 +28,11 @@
 - `prepare_chemprop_multitask_csv.py`: prepare Chemprop multitask data.
 - `convert_chemprop_predictions.py`: convert Chemprop probabilities to the common JSONL format.
 
-## Ablation, statistics, and figures
+## Ablation and statistics
 
 - `component_ablation/`: A0-A5 component-ablation runner and audit.
 - `bootstrap_ci_pubchem.py`: bootstrap confidence intervals.
 - `paired_bootstrap_delta.py`: paired bootstrap model comparison.
-- `plot_fig2_dataset_characterization.py`: label-frequency and label-count panels.
-- `plot_fig3_bar_charts.py`: LLM performance panels.
-- `plot_fig4_ablation_charts.py`: evidence-ablation panels.
-- `plot_fig6_component_ablation.py`: A0-A5 component comparison.
-- `paper_figures/`: framework figure and table/figure asset generation.
 
 ## NITE external validation
 
